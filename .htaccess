@@ -1,0 +1,6 @@
+RewriteEngine On /cegMessStore_new/
+RewriteBase /cegMessStore_new
+RewriteCond $1 !^(index\.php|assets|public|\.txt)
+RewriteCond %{request_filename} !-f
+RewriteCond %{request_filename} !-d
+RewriteRule ^(.*)$ index.php/$1 [PT,L]

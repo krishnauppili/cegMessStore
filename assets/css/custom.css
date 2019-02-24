@@ -1,0 +1,68 @@
+input[type=text],input[type=password]{
+background: white;
+border: 1px solid #000;
+border-radius: 3px;
+box-shadow: 0 0 3px #DDD inset;
+color: #666;
+padding: 5px 10px;
+width:185px; /*remove*/
+height:30px; /*10px*/
+outline: none;
+/*font-size:10px;*/
+}
+
+.margin_col {
+    margin: 1px !important;
+}
+.margin_row{
+    margin: 0px !important; 
+    text-align: left;
+   }
+
+
+::-webkit-input-placeholder {
+   color: #9E9F9D;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #9E9F9D;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #9E9F9D;  
+}
+
+:-ms-input-placeholder {  
+   color: #9E9F9D;  
+}
+
+
+.controls {
+margin: 75px;
+}
+
+
+select {
+border-size: 2px;
+border-color: #000066;
+border-radius: 4px;
+}
+
+.controls a {
+    border-radius: 4px;
+    font-size: 15px;
+    text-align: center;
+    width: 100px;
+}
+
+
+.custom-border{
+border-size: 2px;
+border-color: #000066;
+border-radius: 4px;
+}
+
+
+
+
+
