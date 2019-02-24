@@ -1300,7 +1300,6 @@
          redirect('auth/login','refresh');
          else{
             $data['username'] = $this->ion_auth->user()->row()->username;
-
             $data['group'] = $this->ion_auth->get_logged_in_user_group_names();
             $data['title'] = "Generate Abstract";
             $this->load->view('templates/header');
@@ -1308,7 +1307,6 @@
             if($reload != null && $reload != "")
             $data = $data + $reload;
             $selectedOrders = $this->input->post('selectedOrders[]');
-
             $billNos = array();
             $vendorNames = array();
             $totalAmount = array();
@@ -1325,7 +1323,7 @@
 
             foreach($selectedOrders as $billNo)
             {
-                array_push($billNos,$billNo);
+               array_push($billNos,$billNo);
                $split_word=explode("_",$billNo);
                $date = substr_replace($split_word[0],'-',2,0); 
                $date = substr_replace($date,'-',5,0);
@@ -1337,13 +1335,6 @@
             $date_to_query = rtrim($date_to_query,",");
             $vendorId_to_query = rtrim($vendorId_to_query,",");
             $orderDetails = $this->orders_model->get_order_details($date_to_query,$vendorId_to_query);
-
-
-
-
-
-
-
             $tableTotal = 0;
             for($i=0;$i<count($orderDetails['amount']);$i++)
                $tableTotal += floatval($orderDetails['amount'][$i]);
@@ -1353,15 +1344,12 @@
             $data['receivedDates'] = $orderDetails['receivedDate'];
             $data['tableTotal'] = $tableTotal;
             $this->load->view('templates/body',$data);
-
-
             if(isset($_POST['submit'])){
                if(count(array_unique($orderDetails['vendorName'])) == 1)
                {
 
                   $this->load->view('orders/generate_abstract',$data);
                }
-
                else
                {
                   $data['error'] = "You have selected different vendors";
@@ -1371,9 +1359,6 @@
             }
          }
       }
-
-
-
       public function generate_vegetable_abstract()
       {
          if(!$this->ion_auth->logged_in())

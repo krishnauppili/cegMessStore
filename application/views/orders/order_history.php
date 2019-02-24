@@ -10,10 +10,9 @@
                      console.log(data);
                      var jsonObj = data;
                      console.log(data);
-                     var htmlContents = '<form name="abstract" action="generate_abstract" method="post">';  
+                     var htmlContents = '<form name="abstract" action="generate_abstract" method="post">';
                         htmlContents += '<ul class="collapsible" data-collapsible="accordion">';
                            for (i = 0; i < jsonObj.length; i++) {
-
                                  var t_id = jsonObj[i].t_id;
                                  var vendorName = jsonObj[i].vendor_name;
                                  var receivedDate = jsonObj[i].t_date;
@@ -22,8 +21,7 @@
                                  var split = t_id.split("_");
                                  var billNo = split[2]+'_'+split[3]+'_'+split[5];
                                  console.log(billNo);
-
-                                 htmlContents += '<li>'+      
+                                 htmlContents += '<li>'+
                                  '<div class = "collapsible-header">'+
                                     '<div class= "row margin_row" >'+
                                        '<table >'+
@@ -31,7 +29,6 @@
                                              '<th width="100px">'+
                                                 '<input type="checkbox" name="selectedOrders[]" id="'+billNo+'" value="'+billNo+'"/>'+
                                                 '<label for="'+billNo+'"></label>'+
-
                                                 '</th>'+
                                              '<th width="250px">'+
                                                 '<span class="blue-text text-darken-2">'+
@@ -43,7 +40,6 @@
                                                    receivedDate +
                                                    '</span>'+
                                                 '</th>'+
-               
                                              '<th width="100px">'+
                                                 '<span class="blue-text text-darken-2">'+
                                                    'View' +
@@ -57,7 +53,7 @@
                                     '<div class= "row">'+
                                        '<div class = "col s12 offset-s1">'+
                                           '<div class = "col s3">'+
-                                             '<span class="black-text text-darken-2">'+
+                                             '<span class="black-text text-zdarken-2">'+
                                                 'Item Name'    +
                                                 '</span>'+
                                              '</div>'+
@@ -80,7 +76,7 @@
                                        '</div>';
 
                                     for(j=0;j<items.length;j++){
-                                          htmlContents +=  
+                                          htmlContents +=
                                           '<div class= "row">'+
                                              '<div class = "col s12 offset-s1">'+
                                                 '<div class = "col s3">'+
@@ -159,7 +155,7 @@
        <div class="row">
        <div class="input-field col s6">
          <select class="browser-default" name="selectedVendor" value = "<?php echo isset($selectedVendor) ? urlencode($selectedVendor) : "";?>" id="selectedVendor" required>
-         <?php echo isset($selectedVendor) ? "<option value = '".urlencode($selectedVendor)."'>".$selectedVendor."</option>" : "<option value=''>Select Vendor</option>";?>"                  
+         <?php echo isset($selectedVendor) ? "<option value = '".urlencode($selectedVendor)."'>".$selectedVendor."</option>" : "<option value=''>Select Vendor</option>";?>"                 
             <?php
                foreach($vendors as $each) 
                {
@@ -190,10 +186,6 @@
          </select>
        </div>
    </div>
-
-
-
-   
    <div class="row">
       <div class = "col s6">
          <label for="from">From date</label>
@@ -220,10 +212,6 @@
             value="print" name="print" id="print-report">
             Print
          </a>
-
-
-
-
       </div>
    </div>
 
@@ -233,7 +221,6 @@
          <table>
             <tr>
                <th width="100px">
-
                   <span class="blue-text">Select</span>
                </th>
                <th width="250px">
@@ -253,10 +240,6 @@
             </tr>
             <table>
             </div>
-
-
-
-
             <div id="vendorsList">
             </div>
 
