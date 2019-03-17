@@ -8,7 +8,6 @@ function toggle(source) {
   }
 }
 function approveStockApproximation(details){
-   console.log("Details",details);
    var checkboxes = document.getElementsByName('selectedItems[]');
    var checkboxesChecked = [];
    for (var i=0; i<checkboxes.length; i++) {
@@ -19,38 +18,46 @@ function approveStockApproximation(details){
    console.log("Approximation List ",approximationList);
    console.log("Checkboxes checked ",checkboxesChecked);
    var itemsToApprove = [];
+   var itemNameParams = [];
+   var approximatedDate;
+   var actualStockParams = [];
    for(var i in approximationList){
       if(checkboxesChecked.includes(approximationList[i].sid)){
+         itemNameParams.push(approximationList[i].itemName);
+         actualStockParams.push(approximationList[i].actualStock);
          itemsToApprove.push(approximationList[i]);
+         approximatedDate = approximationList[i].date;
       }
    }
    console.log("Items to approve ",itemsToApprove);
-   // var approximatedDate = details['date'];
-   // var itemName = details['itemName'];
-   // var systemStock = details['systemStock'];
-   // var actualStock = details['actualStock'];
-   // var differencePercentage = details['differencePercentage'];
-   // console.log(approximatedDate);
-   // console.log(itemName);
-   // console.log(systemStock);// Extract info from data-* attributes
-   // if(confirm('Do you really want to approve this approximation ? This cannot be undone' )) {
-   //       $.ajax({
-   //             type: "POST",
-   //             url: "<?php echo base_url()."items/approve_stock_approximation";?>",
-   //             cache: false,
-   //             data: {'approximatedDate' : approximatedDate, 'itemName' : itemName, 'systemStock' : systemStock , 'actualStock' : actualStock , 'differencePercentage' : differencePercentage  },
-   //             dataType: 'html',
-   //             success: function (resp) {
-   //                   console.log(resp);
-   //                   alert(resp);
-   //                   location.reload(true);
-   //             },
-   //             error: function(err) {
-   //                   console.log(err);
-   //                }
-   //          });
-   //       }
-
+   if(itemsToApprove.length >= 1080){
+      alert("Please select less than or equal to 20 items");
+   }
+   else{
+      itemNameParams = itemNameParams.join(',');
+      actualStockParams = actualStockParams.join(',');
+         if(confirm('Do you really want to approve this approximation ? This cannot be undone' )) {
+            $.ajax({
+                  type: "POST",
+                  url: "<?php echo base_url()."items/approve_stock_approximation";?>",
+                  cache: false,
+                  data: {
+                     'approximatedDate' : approximatedDate,
+                     'itemNameParams' : itemNameParams,
+                     'actualStockParams' : actualStockParams,
+                  },
+                  dataType: 'html',
+                  success: function (resp) {
+                        console.log(resp);
+                        alert(resp);
+                        location.reload(true);
+                  },
+                  error: function(err) {
+                        console.log(err);
+                  }
+            });
+         }
+   }
 }
 
 function disapproveStockApproximation(details)
@@ -109,8 +116,8 @@ function get_stock_approximation_details(){
                      dataToPrint += '<table style="width:1000px">';
                         dataToPrint += '<tr>'+
                            '<th>'+
-                                 '<input type="checkbox" id="selectAll" value="Select All" name="selectAll" onClick="javascript:toggle(this)"/>'+
-                                 '<label for="selectAll"></label>'+
+                                 // '<input type="checkbox" id="selectAll" value="Select All" name="selectAll" onClick="javascript:toggle(this)"/>'+
+                                 // '<label for="selectAll"></label>'+
                               '</th>'+
                            '<th>'+
                               '<span class="blue-text">Date</span>'+

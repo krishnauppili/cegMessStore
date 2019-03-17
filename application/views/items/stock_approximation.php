@@ -32,10 +32,17 @@
                }
          }
    });
-   function change_color(obj)
+   function change_color(obj,quantityAvailable)
    {
-         if($(obj).val().length !== 0) $(obj).css('background-color','#ffff00');
-         else $(obj).css('background-color','#fff');
+         console.log($(obj).val());
+         console.log("Quantity available ",quantityAvailable);
+         if($(obj).val() === quantityAvailable){
+            alert("System stock should not be equal to actual stock");
+            $(obj).val("");
+         }
+         else{
+            $(obj).css('background-color','#ffff00');
+         }
    }
 
 </script>
@@ -43,9 +50,8 @@
    $decodedTableData = json_decode($tableData,true);
    $size = count($decodedTableData['itemNames']);
 ?>
-<form name="selection" method="post"  action="stock_approximation" > 
+<form name="selection" method="post" action="stock_approximation" >
    <div class="row">
-
       <div class = "input-field col s6">
          <input type="date" class="datepicker" id="approximatedDate" name="approximatedDate" placeholder='Select Date' required/>
       </div>
@@ -86,14 +92,11 @@
             </p>
          </div>
          <div class="col s4">
-            <input type="number" step = 0.01 name="selectedQuantity[]" value="" id='<?php echo 'txt'.str_replace(' ', '_', $decodedTableData['itemNames'][$i]);?>' placeholder='Enter Quantity' onchange="javascript:change_color(this)"/>
-       
+            <input type="number" step = 0.01 name="selectedQuantity[]" id='<?php echo 'txt'.str_replace(' ', '_', $decodedTableData['itemNames'][$i]);?>' placeholder='Enter Quantity' onchange="javascript:change_color(this,'<?php echo $decodedTableData['quantityAvailable'][$i];?>')"/>
          </div>
          <div class="col s3">
             <span class="blue-text text-darken-2"><h5><?php echo $decodedTableData['quantityAvailable'][$i];?></h5></span>
-            
          </div>
-
       </div>
       <?php
       }

@@ -835,7 +835,7 @@ class Items_model extends CI_Model {
 
 		$mysqli->close();
 
-		return $temp;	
+		return $temp;
 
 	}
 
@@ -853,42 +853,24 @@ class Items_model extends CI_Model {
 
 	public function approve_stock_approximation($data)
 	{
-
 		$approximatedDate = date('Y-m-d',strtotime($data['approximatedDate']));
-		$systemStock = $data['systemStock'];
-		$actualStock = $data['actualStock'];
-		$itemName = $data['itemName'];
-		$difference_percent = $data['differencePercentage'];
-
-		$query = "CALL stock_approximation ( '".$approximatedDate."','".$itemName."',".$actualStock.",@query,@status,@billNo);";
-		
-		
+		$actualStockParams = $data['actualStockParams'];
+		$itemNameParams = $data['itemNameParams'];
+		$query = "CALL stock_approximation ( '".$approximatedDate."','".$itemNameParams."','".$actualStockParams."',@query,@status,@billNo);";
 		$query .= "SELECT @status,@query,@billNo;";
-		
 		$mysqli = new mysqli("localhost","root","HostelStore12345","ceg_mess_store");
-
 		$temp = array();
-
-
 		$mysqli->begin_transaction();
-
 		if ($mysqli->multi_query($query)) {
-    	
     		do {
-   	
    	        	if ($result = $mysqli->store_result()) {
-           
            		 	while ($row = $result->fetch_row()) {
-            			
             			$temp['status'] = $row[0];
-            			
             			if (isset($row[1]))
             				$temp['query'] = $row[1];
 
             			if (isset($row[2]))
             				$temp['billNo'] = $row[2];
-
-
             		}
             		$result->free();
         		}
@@ -897,20 +879,14 @@ class Items_model extends CI_Model {
         		{
 
         		}
-
-        		
     		} while ($mysqli->more_results() && $mysqli->next_result());
 		}
 
-  
 		if($temp['status'] == 'success')
-		{	
-			
-				$mysqli->commit();
-				$temp['status'] = 'Data Inserted Successfully';
-			
-		}	
-		
+		{
+			$mysqli->commit();
+			$temp['status'] = 'Data Inserted Successfully';
+		}
 		else
 		{
 			$mysqli->rollback();
@@ -929,26 +905,16 @@ class Items_model extends CI_Model {
 				}
 
          		if ($mysqli->more_results()) {
-        
             	}
 
 			}while ($mysqli->more_results() && $mysqli->next_result());
-
 		}
-
-
 		$mysqli->close();
-
-		return $temp;		
-
+		return $temp;
+		// $temp = array();
+		// $temp['query'] = $query;
+		// $temp['status'] = $query;
+		// $temp['billNo'] = 'undefined';
+		// return $temp;
 	}
-
-
-	
-
-
-
-
-
-
   }

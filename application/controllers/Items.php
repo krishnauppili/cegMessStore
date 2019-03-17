@@ -65,7 +65,6 @@
 
          public function issue_item($data="")
          {
-
             if(!$this->ion_auth->logged_in())
             redirect('auth/login','refresh');
             else{
@@ -951,54 +950,38 @@
             $data['group'] = $this->ion_auth->get_logged_in_user_group_names();
 
             $stockApproximationDetails = ($this->items_model->generate_stock_approximation_details());
-           
             echo json_encode($stockApproximationDetails);
          }
-
-
       }
 
-       public function notification_approval()
-      {
-         if(!$this->ion_auth->logged_in())
-         redirect('auth/login','refresh');
-         else
-         {
-            $data['username'] = $this->ion_auth->user()->row()->username;
-
-            $data['group'] = $this->ion_auth->get_logged_in_user_group_names();
-
-            $notificationDetails = ($this->items_model->generate_notification_details());
-           
-            echo json_encode($notificationDetails);
-         }
-
-
-      }
-
-   public function approve_stock_approximation()
-   {
+   public function notification_approval(){
       if(!$this->ion_auth->logged_in())
-                        redirect('auth/login','refresh');
-            else {
-               $temp=array();
+         redirect('auth/login','refresh');
+      else{
+         $data['username'] = $this->ion_auth->user()->row()->username;
+         $data['group'] = $this->ion_auth->get_logged_in_user_group_names();
+         $notificationDetails = ($this->items_model->generate_notification_details());
+         echo json_encode($notificationDetails);
+      }
+   }
 
+   public function approve_stock_approximation(){
+      if(!$this->ion_auth->logged_in())
+         redirect('auth/login','refresh');
+      else {
+         $temp=array();
          $temp['approximatedDate'] = $_POST['approximatedDate'];
-         $temp['itemName'] = $_POST['itemName'];
-         $temp['systemStock'] = $_POST['systemStock'];
-         $temp['actualStock'] = $_POST['actualStock'];
-         $temp['differencePercentage'] = $_POST['differencePercentage'];
+         $temp['itemNameParams'] = $_POST['itemNameParams'];
+         $temp['actualStockParams'] = $_POST['actualStockParams'];
          $data['username'] = $this->ion_auth->user()->row()->username;
          $data['group'] = $this->ion_auth->get_logged_in_user_group_names();
          $return = $this->items_model->approve_stock_approximation($temp);
          if($return['status'] == "Data Inserted Successfully")
-               echo 'Approval done succesfully for Edit in '.$return['billNo'].'';
+            echo 'Approval done succesfully for Edit in '.$return['billNo'].'';
          else
             echo 'Error : '.$return['status'].' for Bill No :'.$return['billNo'].'';
-         }
-
+      }
    }
-
 
    public function disapprove_stock_approximation()
    {
